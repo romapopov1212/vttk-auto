@@ -12,4 +12,14 @@ public class CarRepository(CarDbContext context) : ICarRepository
         await context.SaveChangesAsync();
         return newEntity.Entity.Id;
     }
+
+    public Task<List<CarEntity>> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<CarEntity> GetById(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

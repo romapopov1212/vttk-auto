@@ -11,4 +11,6 @@ public class CarDbContext : DbContext
     }
     public DbSet<CarEntity> Car { get; set; }
     public DbSet<SpecificationsEntity> Specifications { get; set; }
+    public DbSet<CarClassificationEntity> CarClassification { get; set; }
+    public DbSet<TransportPriceEntity> TransportPrices { get; set; }
 }

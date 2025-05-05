@@ -5,18 +5,10 @@ using vttk_auto.Domain.Entities;
 
 namespace vttk_auto.Application.Services.Cars;
 
-public class CarService(ICarRepository carRepository, ParserCar parser) : ICarService
+public class CarService(ICarRepository carRepository) : ICarService
 {
-    public async Task<Guid> CreateCar(CarToAdd car)
+    public async Task<Guid> CreateCar(CarEntity car)
     {
-        var entity = new CarEntity
-        {
-            Id = Guid.NewGuid(),
-            Brand = car.Brand,
-            Model = car.Model,
-            Modification = car.Modification,
-        };
-        
-        return await carRepository.Add(entity);
+        return await carRepository.Add(car);
     }
 }

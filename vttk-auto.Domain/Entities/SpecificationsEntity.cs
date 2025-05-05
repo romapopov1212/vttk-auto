@@ -7,6 +7,8 @@ public class SpecificationsEntity
     public string Width { get; set; } = string.Empty;
     public string Weight { get; set; } = string.Empty;
     
+    public string Length { get; set; } = string.Empty;
+    
     public Guid CarId { get; set; }
     public CarEntity? Car { get; set; }
 }

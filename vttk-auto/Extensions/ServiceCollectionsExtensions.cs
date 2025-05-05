@@ -1,7 +1,12 @@
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using vttk_auto.Application.Abstractions.Repository;
+using vttk_auto.Application.Abstractions.Services;
+using vttk_auto.Application.Services;
+using vttk_auto.Application.Services.Cars;
 using vttk_auto.Infractructure.Context;
+using vttk_auto.Infractructure.Repositories;
 
 namespace vttk_auto.Extensions;
 
@@ -33,6 +38,11 @@ public static class ServiceCollectionsExtensions
     public static WebApplicationBuilder AddApplicationServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<HtmlWeb>();
+
+        builder.Services.AddScoped<ICarService, CarService>();
+        builder.Services.AddScoped<ICarRepository, CarRepository>();
+        
+        builder.Services.AddScoped<ParserCar>();
         return builder;
     }
 
