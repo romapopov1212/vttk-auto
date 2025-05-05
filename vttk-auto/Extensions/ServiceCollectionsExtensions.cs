@@ -38,11 +38,12 @@ public static class ServiceCollectionsExtensions
     public static WebApplicationBuilder AddApplicationServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<HtmlWeb>();
+        
+        builder.Services.AddScoped<ParserCar>();
 
         builder.Services.AddScoped<ICarService, CarService>();
         builder.Services.AddScoped<ICarRepository, CarRepository>();
         
-        builder.Services.AddScoped<ParserCar>();
         return builder;
     }
 

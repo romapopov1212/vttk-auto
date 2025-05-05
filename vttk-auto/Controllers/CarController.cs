@@ -11,7 +11,7 @@ namespace vttk_auto.Controllers;
 public class CarController(ICarService carService, ParserCar parser) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddCarToDb([FromHeader] string url)
+    public async Task<ActionResult> AddCarToDb([FromHeader] string url)
     {
         var entity = await parser.ParserCarModel();
         Console.WriteLine($"Parsed entities: {entity.Count}");
@@ -21,6 +21,27 @@ public class CarController(ICarService carService, ParserCar parser) : Controlle
             var id = await carService.CreateCar(e);
         }
         return Ok();
+    }
+
+    [HttpGet("brands")]
+    public async Task<ActionResult<CarToGetBrands>> GetCarBrands()
+    {
+        var response = await carService.GetAllBrands();
+        return Ok(response);
+    }
+
+    [HttpGet("models/{brand}")]
+    public async Task<ActionResult<CarToGetModels>> GetCarModels(string brand)
+    {
+        var response = await carService.GetAllModels(brand);
+        return Ok(response);
+    }
+
+    [HttpGet("modification/{brand}/{model}")]
+    public async Task<ActionResult<CarToGetModifications>> GetCarModifications(string brand, string model)
+    {
+        var response = await carService.GetAllModifications(brand, model);
+        return Ok(response);
     }
 
 }

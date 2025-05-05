@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using vttk_auto.Application.Abstractions.Repository;
 using vttk_auto.Domain.Entities;
 using vttk_auto.Infractructure.Context;
@@ -12,14 +13,37 @@ public class CarRepository(CarDbContext context) : ICarRepository
         await context.SaveChangesAsync();
         return newEntity.Entity.Id;
     }
-
-    public Task<List<CarEntity>> GetAll()
+    public async Task<CarEntity?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+         return await context.Car.FindAsync(id);
     }
 
-    public Task<CarEntity> GetById(Guid id)
+    public async Task<List<string>> GetBrands()
     {
-        throw new NotImplementedException();
+        var brands = await context.Car
+            .Select(c => c.Brand)
+            .Distinct()
+            .ToListAsync();
+        return brands;
+    }
+
+    public async Task<List<string>> GetModels(string brand)
+    {
+        var models = await context.Car
+            .Where(c => c.Brand == brand).
+            Select(c => c.Model)
+            .Distinct()
+            .ToListAsync();
+        return models;
+    }
+
+    public async Task<List<string>> GetModifications(string brand, string model)
+    {
+        var modifications = await context.Car
+            .Where(c => c.Brand == brand && c.Model == model)
+            .Select(c => c.Modification)
+            .Distinct()
+            .ToListAsync();
+        return modifications;
     }
 }
