@@ -8,4 +8,6 @@ public class CarEntity
     public string Modification { get; set; } = string.Empty;
     public Guid SpecificationId { get; set; }
     public SpecificationsEntity? Specifications { get; set; }
+    
+    public ShippingRequestEntity? ShippingRequest { get; set; }
 }

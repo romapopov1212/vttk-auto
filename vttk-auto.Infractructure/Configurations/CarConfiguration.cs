@@ -14,5 +14,8 @@ public class CarConfiguration : IEntityTypeConfiguration<CarEntity>
             .WithOne(s => s.Car)
             .HasForeignKey<CarEntity>(c => c.SpecificationId)
             .HasPrincipalKey<SpecificationsEntity>(s => s.Id);
+
+        builder.HasOne(c => c.ShippingRequest)
+            .WithOne(s => s.Car);
     }
 }
