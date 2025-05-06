@@ -13,7 +13,7 @@ public class CarController(ICarService carService, ParserCar parser) : Controlle
     [HttpPost]
     public async Task<ActionResult> AddCarToDb([FromHeader] string url)
     {
-        var entity = await parser.ParserCarModel();
+        var entity =  parser.ParserCarModel();
         Console.WriteLine($"Parsed entities: {entity.Count}");
 
         foreach (var e in entity)
