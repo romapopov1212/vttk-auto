@@ -23,10 +23,39 @@ public class CarController(ICarService carService, ParserCar parser) : Controlle
         return Ok();
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CarToGetById>> GetCarById(Guid id)
+    {
+        var car = await carService.GetById(id);
+        if (car is null)
+        {
+            return NotFound();
+        }
+        return Ok(car);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<CarToGetAll>>> GetCars()
+    {
+        var cars = await carService.GetAllCars();
+        if (cars is null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(cars);
+    }
+    
     [HttpGet("brands")]
     public async Task<ActionResult<CarToGetBrands>> GetCarBrands()
     {
         var response = await carService.GetAllBrands();
+        
+        if (response is null)
+        {
+            return NotFound();
+        }
+        
         return Ok(response);
     }
 
@@ -34,6 +63,12 @@ public class CarController(ICarService carService, ParserCar parser) : Controlle
     public async Task<ActionResult<CarToGetModels>> GetCarModels(string brand)
     {
         var response = await carService.GetAllModels(brand);
+        
+        if (response is null)
+        {
+            return NotFound();
+        }
+        
         return Ok(response);
     }
 
@@ -41,6 +76,12 @@ public class CarController(ICarService carService, ParserCar parser) : Controlle
     public async Task<ActionResult<CarToGetModifications>> GetCarModifications(string brand, string model)
     {
         var response = await carService.GetAllModifications(brand, model);
+
+        if (response is null)
+        {
+            return NotFound();
+        }
+        
         return Ok(response);
     }
 

@@ -18,16 +18,26 @@ public class CarRepository(CarDbContext context) : ICarRepository
          return await context.Car.FindAsync(id);
     }
 
-    public async Task<List<string>> GetBrands()
+    public async Task<List<CarEntity>?> GetAll()
+    {
+        var cars = await context.Car
+            .Distinct()
+            .ToListAsync();
+        
+        return cars;
+    }
+
+    public async Task<List<string>?> GetBrands()
     {
         var brands = await context.Car
             .Select(c => c.Brand)
             .Distinct()
             .ToListAsync();
+        
         return brands;
     }
 
-    public async Task<List<string>> GetModels(string brand)
+    public async Task<List<string>?> GetModels(string brand)
     {
         var models = await context.Car
             .Where(c => c.Brand == brand).
@@ -37,7 +47,7 @@ public class CarRepository(CarDbContext context) : ICarRepository
         return models;
     }
 
-    public async Task<List<string>> GetModifications(string brand, string model)
+    public async Task<List<string>?> GetModifications(string brand, string model)
     {
         var modifications = await context.Car
             .Where(c => c.Brand == brand && c.Model == model)
